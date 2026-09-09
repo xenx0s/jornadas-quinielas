@@ -1,0 +1,262 @@
+{
+  "jornada-5": {
+    "name": "Jornada 5 · 09-09-26",
+    "partidos": [
+      {
+        "local": "B. Dortmund",
+        "visitante": "Villarreal"
+      },
+      {
+        "local": "Oporto",
+        "visitante": "Manchester City"
+      },
+      {
+        "local": "Losc Lille",
+        "visitante": "Betis"
+      },
+      {
+        "local": "Real Madrid",
+        "visitante": "Inter de Milán"
+      },
+      {
+        "local": "Barcelona",
+        "visitante": "Feyenoord"
+      },
+      {
+        "local": "PSG",
+        "visitante": "Slovan Bratislava"
+      },
+      {
+        "local": "Sporting de Portugal",
+        "visitante": "Galatasaray"
+      },
+      {
+        "local": "Nápoles",
+        "visitante": "Arsenal"
+      },
+      {
+        "local": "Fenerbahçe Sk",
+        "visitante": "Roma"
+      },
+      {
+        "local": "PSV",
+        "visitante": "Shakhtar Donetsk"
+      },
+      {
+        "local": "Como 1907",
+        "visitante": "RB. Leipzig"
+      },
+      {
+        "local": "Bayern de Múnich",
+        "visitante": "Bodo Glimt"
+      },
+      {
+        "local": "Manchester United",
+        "visitante": "Sabah"
+      },
+      {
+        "local": "Sk Slavia de Praga",
+        "visitante": "Rc Lens"
+      }
+    ],
+    "partido15": {
+      "local": "Liverpool",
+      "visitante": "At. Madrid"
+    }
+  },
+  "jornada-6": {
+    "name": "Jornada 6 · 12-09-26",
+    "partidos": [
+      {
+        "local": "ATH.CLUB",
+        "visitante": "ELCHE"
+      },
+      {
+        "local": "LEVANTE",
+        "visitante": "BARCELONA"
+      },
+      {
+        "local": "OSASUNA",
+        "visitante": "ESPANYOL"
+      },
+      {
+        "local": "RACING S.",
+        "visitante": "ALAVÉS"
+      },
+      {
+        "local": "R.MADRID",
+        "visitante": "RAYO"
+      },
+      {
+        "local": "SEVILLA",
+        "visitante": "VALENCIA"
+      },
+      {
+        "local": "VILLARREAL",
+        "visitante": "BETIS"
+      },
+      {
+        "local": "CÁDIZ",
+        "visitante": "LAS PALMAS"
+      },
+      {
+        "local": "TENERIFE",
+        "visitante": "LEGANÉS"
+      },
+      {
+        "local": "VALLADOLID",
+        "visitante": "R.OVIEDO"
+      },
+      {
+        "local": "ALAVÉS (F)",
+        "visitante": "GRANADA (F)"
+      },
+      {
+        "local": "LOGROÑO (F)",
+        "visitante": "VALENCIA (F)"
+      },
+      {
+        "local": "EIBAR (F)",
+        "visitante": "BADALONA W.(F)"
+      },
+      {
+        "local": "MADRID CFF (F)",
+        "visitante": "SEVILLA (F)"
+      }
+    ],
+    "partido15": {
+      "local": "R.SOCIEDAD",
+      "visitante": "AT.MADRID"
+    }
+  },
+  "jornada-7": {
+    "name": "Jornada 7 · 15-09-26",
+    "partidos": [
+      {
+        "local": "RAYO",
+        "visitante": "ESPANYOL"
+      },
+      {
+        "local": "ALAVÉS",
+        "visitante": "VALENCIA"
+      },
+      {
+        "local": "ELCHE",
+        "visitante": "R.MADRID"
+      },
+      {
+        "local": "AT.MADRID",
+        "visitante": "OSASUNA"
+      },
+      {
+        "local": "DEPORTIVO",
+        "visitante": "SEVILLA"
+      },
+      {
+        "local": "BARCELONA",
+        "visitante": "RACING S."
+      },
+      {
+        "local": "LEVANTE",
+        "visitante": "ATH.CLUB"
+      },
+      {
+        "local": "BETIS",
+        "visitante": "GETAFE"
+      },
+      {
+        "local": "OMONIA N.",
+        "visitante": "CELTA"
+      },
+      {
+        "local": "MILAN",
+        "visitante": "BENFICA"
+      },
+      {
+        "local": "ANDERLECHT",
+        "visitante": "OL. LYON"
+      },
+      {
+        "local": "CELTIC",
+        "visitante": "FERENCVAROS"
+      },
+      {
+        "local": "PLZEN",
+        "visitante": "R. UNION SG"
+      },
+      {
+        "local": "R.SOCIEDAD",
+        "visitante": "BOURNEMOUTH"
+      }
+    ],
+    "partido15": {
+      "local": "MÁLAGA",
+      "visitante": "VILLARREAL"
+    }
+  },
+  "jornada-8": {
+    "name": "Jornada 8 · 19-09-26",
+    "partidos": [
+      {
+        "local": "OSASUNA",
+        "visitante": "RAYO"
+      },
+      {
+        "local": "ATH.CLUB",
+        "visitante": "ALAVÉS"
+      },
+      {
+        "local": "SEVILLA",
+        "visitante": "BARCELONA"
+      },
+      {
+        "local": "GETAFE",
+        "visitante": "MÁLAGA"
+      },
+      {
+        "local": "DEPORTIVO",
+        "visitante": "BETIS"
+      },
+      {
+        "local": "VILLARREAL",
+        "visitante": "LEVANTE"
+      },
+      {
+        "local": "VALENCIA",
+        "visitante": "R.SOCIEDAD"
+      },
+      {
+        "local": "ANDORRA FC",
+        "visitante": "SPORTING"
+      },
+      {
+        "local": "CASTELLÓN",
+        "visitante": "TENERIFE"
+      },
+      {
+        "local": "LEGANÉS",
+        "visitante": "GRANADA"
+      },
+      {
+        "local": "AT.MADRID (F)",
+        "visitante": "LOGROÑO (F)"
+      },
+      {
+        "local": "EIBAR (F)",
+        "visitante": "ATH.CLUB (F)"
+      },
+      {
+        "local": "R.MADRID (F)",
+        "visitante": "VALENCIA (F)"
+      },
+      {
+        "local": "TENERIFE (F)",
+        "visitante": "SEVILLA (F)"
+      }
+    ],
+    "partido15": {
+      "local": "AT.MADRID",
+      "visitante": "R.MADRID"
+    }
+  }
+}
