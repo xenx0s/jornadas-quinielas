@@ -476,7 +476,7 @@
       }
       const jornadaNum = state.jornadaKey ? state.jornadaKey.replace('jornada-', 'J').toUpperCase() : 'X';
       const pleno15 = state.plenoLocal + '-' + state.plenoVisitante;
-      lines.push('REDUCTOR Q;' + jornadaNum + ';' + signos + ';' + pleno15);
+      lines.push('PRONÓSTICO;' + jornadaNum + ';' + signos + ';' + pleno15);
     }
     return lines;
   }
