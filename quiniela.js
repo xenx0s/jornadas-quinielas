@@ -476,7 +476,7 @@
       }
       const jornadaNum = state.jornadaKey ? state.jornadaKey.replace('jornada-', 'J').toUpperCase() : 'X';
       const pleno15 = state.plenoLocal + '-' + state.plenoVisitante;
-      lines.push('PRONÓSTICO;' + jornadaNum + ';' + signos + ';' + pleno15);
+      lines.push('REDUCTOR Q;' + jornadaNum + ';' + signos + ';' + pleno15);
     }
     return lines;
   }
@@ -498,7 +498,7 @@
     lines.forEach(function(line, i){
       linesHtml += '<div class="columna"><span class="numero">' + (i+1) + '</span> ' + line + '</div>';
     });
-    return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>REDUCTOR Q</title><style>body{font-family:Arial,sans-serif;padding:20px}.qr{width:160px;height:160px;float:right;margin:0 0 20px 20px}h1{font-size:18px;margin:0 0 10px}.meta{color:#555;font-size:12px;margin-bottom:15px}.columna{font-family:"Courier New",monospace;font-size:14px;padding:4px 0;border-bottom:1px solid #eee}.numero{font-weight:bold;color:#48e500;margin-right:10px}</style></head><body><h1>REDUCTOR Q<</h1><div class="meta">Generado: '+stamp+'</div>'+qrHtml+'<div style="clear:both"></div><h2>Columnas ('+lines.length+')</h2>'+linesHtml+'</body></html>';
+    return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>REDUCTOR Q</title><style>body{font-family:Arial,sans-serif;padding:20px}.qr{width:160px;height:160px;float:right;margin:0 0 20px 20px}h1{font-size:18px;margin:0 0 10px}.meta{color:#555;font-size:12px;margin-bottom:15px}.columna{font-family:"Courier New",monospace;font-size:14px;padding:4px 0;border-bottom:1px solid #eee}.numero{font-weight:bold;color:#48e500;margin-right:10px}</style></head><body><h1>REDUCTOR Q</h1><div class="meta">Generado: '+stamp+'</div>'+qrHtml+'<div style="clear:both"></div><h2>Columnas ('+lines.length+')</h2>'+linesHtml+'</body></html>';
   }
 
   const printBtn = document.getElementById('printBtn');
