@@ -1,9 +1,4 @@
 (function() {
-  if(typeof qrcode === 'undefined'){
-    console.error('Librería QR no cargada. Asegúrate de incluir el script de qrcode en el HTML.');
-    return;
-  }
-  
   const SYSTEMS = {
     '0T7D12': { name: '0 triples · 7 dobles al 12 · 7 columnas · 5,25€', cols: 7, nDobles: 7, nTriples: 0, guaranteeLevel: 12, price: '5,25 €', patternDobles: [['A','A','B','B','B','B','A'],['A','B','A','B','B','B','A'],['A','B','A','B','B','B','A'],['B','A','B','A','A','A','B'],['A','B','A','B','A','A','B'],['A','B','A','A','B','B','A'],['A','A','A','B','B','B','A']], patternTriples: [], garantias: { headers:['14','13','12','11','10'], rows:[{pct:'5,47 %', vals:['1-1','—','0-1','0-2','0-3']},{pct:'38,28 %', vals:['—','1-2','0-2','0-2','0-4']},{pct:'100,00 %', vals:['—','—','1-3','1-4','0-3']}] } },
     '1T6D12': { name: '1 triple · 6 dobles al 12 · 8 columnas · 6€', cols: 8, nDobles: 6, nTriples: 1, guaranteeLevel: 12, price: '6 €', patternDobles: [['A','B','B','A','A','B','A','B'],['A','B','A','A','B','A','B','B'],['A','A','B','B','B','A','A','B'],['A','A','A','B','A','B','B','B'],['A','A','A','A','B','B','B','B'],['A','A','A','A','B','B','B','B']], patternTriples: [['A','B','C','B','A','B','C','A']], garantias: { headers:['14','13','12','11','10'], rows:[{pct:'4,17 %', vals:['1-1','0-0','0-1','2-3','0-1']},{pct:'35,42 %', vals:['—','1-2','0-2','0-2','0-6']},{pct:'100,00 %', vals:['—','—','1-3','2-3','0-4']}] } },
@@ -497,7 +492,7 @@
     lines.forEach(function(line, i){
       linesHtml += '<div class="columna"><span class="numero">' + (i+1) + '</span> ' + line + '</div>';
     });
-    return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>REDUCTOR Q</title><style>body{font-family:Arial,sans-serif;padding:20px}.qr{width:160px;height:160px;float:right;margin:0 0 20px 20px}h1{font-size:18px;margin:0 0 10px}.meta{color:#555;font-size:12px;margin-bottom:15px}.columna{font-family:"Courier New",monospace;font-size:14px;padding:4px 0;border-bottom:1px solid #eee}.numero{font-weight:bold;color:#48e500;margin-right:10px}</style></head><body><h1>REDUCTOR Q</h1><div class="meta">Generado: '+stamp+'</div>'+qrHtml+'<div style="clear:both"></div><h2>Columnas ('+lines.length+')</h2>'+linesHtml+'</body></html>';
+    return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Reductor Q</title><style>body{font-family:Arial,sans-serif;padding:20px}.qr{width:160px;height:160px;float:right;margin:0 0 20px 20px}h1{font-size:18px;margin:0 0 10px}.meta{color:#555;font-size:12px;margin-bottom:15px}.columna{font-family:"Courier New",monospace;font-size:14px;padding:4px 0;border-bottom:1px solid #eee}.numero{font-weight:bold;color:#48e500;margin-right:10px}</style></head><body><h1>Reductor Q</h1><div class="meta">Generado: '+stamp+'</div>'+qrHtml+'<div style="clear:both"></div><h2>Columnas ('+lines.length+')</h2>'+linesHtml+'</body></html>';
   }
 
   const printBtn = document.getElementById('printBtn');
