@@ -557,7 +557,7 @@
       'h1{font-size:17px;margin:0 0 4px;letter-spacing:.05em}' +
       '.meta{font-size:11px;color:#555;margin-bottom:16px}' +
       '.qr-wrap{text-align:center;margin:0 0 18px}' +
-      '.qr{width:250px;height:250px;image-rendering:pixelated}' +
+      '.qr{width:150px;height:150px;image-rendering:pixelated}' +
       '.qr-error{color:#b00;font-size:12px}' +
       '.cols{margin:0 0 14px}' +
       '.columna{font-family:"Courier New",Courier,monospace;font-size:14px;letter-spacing:1px;padding:3px 0;border-bottom:1px solid #eee}' +
