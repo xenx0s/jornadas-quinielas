@@ -1,4 +1,9 @@
 (function() {
+  if(typeof qrcode === 'undefined'){
+    console.error('Librería QR no cargada. Asegúrate de incluir el script de qrcode en el HTML.');
+    return;
+  }
+
   const SYSTEMS = {
     '0T7D12': { name: '0 triples · 7 dobles al 12 · 7 columnas · 5,25€', cols: 7, nDobles: 7, nTriples: 0, guaranteeLevel: 12, price: '5,25 €', patternDobles: [['A','A','B','B','B','B','A'],['A','B','A','B','B','B','A'],['A','B','A','B','B','B','A'],['B','A','B','A','A','A','B'],['A','B','A','B','A','A','B'],['A','B','A','A','B','B','A'],['A','A','A','B','B','B','A']], patternTriples: [], garantias: { headers:['14','13','12','11','10'], rows:[{pct:'5,47 %', vals:['1-1','—','0-1','0-2','0-3']},{pct:'38,28 %', vals:['—','1-2','0-2','0-2','0-4']},{pct:'100,00 %', vals:['—','—','1-3','1-4','0-3']}] } },
     '1T6D12': { name: '1 triple · 6 dobles al 12 · 8 columnas · 6€', cols: 8, nDobles: 6, nTriples: 1, guaranteeLevel: 12, price: '6 €', patternDobles: [['A','B','B','A','A','B','A','B'],['A','B','A','A','B','A','B','B'],['A','A','B','B','B','A','A','B'],['A','A','A','B','A','B','B','B'],['A','A','A','A','B','B','B','B'],['A','A','A','A','B','B','B','B']], patternTriples: [['A','B','C','B','A','B','C','A']], garantias: { headers:['14','13','12','11','10'], rows:[{pct:'4,17 %', vals:['1-1','0-0','0-1','2-3','0-1']},{pct:'35,42 %', vals:['—','1-2','0-2','0-2','0-6']},{pct:'100,00 %', vals:['—','—','1-3','2-3','0-4']}] } },
@@ -8,6 +13,19 @@
 
   const JORNADAS = {};
   const JORNADAS_URL = 'https://raw.githubusercontent.com/xenx0s/jornadas-quinielas/main/jornadas.json';
+
+  // ===== FORMATO QR / IMPRESIÓN (estructura de boleto oficial) ===============
+  // Estructura observada en un boleto real sellado:
+  //   A=<34 dígitos>;P=3;S=<jornada+fecha>:1;W=0;.1=<14 signos>:<L>-<V>.2=...8=...;T=<...>;
+  // El Pleno al 15 va SOLO pegado a la columna 1. Máx. 8 columnas por boleto.
+  //
+  // OJO: A, P, W y T los genera el TERMINAL de la administración al sellar.
+  // No se pueden inventar. Quedan aquí como constantes editables para pruebas.
+  const QR_A = '';
+  const QR_P = '3';
+  const QR_W = '0';
+  const QR_T = '';
+  const COLS_POR_BOLETO = 8;
 
   function loadRemoteJornadas(){
     if(!JORNADAS_URL || JORNADAS_URL.indexOf('TU-USUARIO') !== -1) return;
@@ -458,41 +476,93 @@
     }
   }
 
-  function buildAdminLines(){
+  function buildColumnas(){
     const sys = currentSystem();
     const orders = getOrders();
-    const lines = [];
-    for(let col=0; col<sys.cols; col++){
-      let signos = '';
-      for(let r=0; r<14; r++){
-        const {sign} = signFor(r, col, orders);
-        signos += sign;
-      }
-      const jornadaNum = state.jornadaKey ? state.jornadaKey.replace('jornada-', 'J').toUpperCase() : 'X';
-      const pleno15 = state.plenoLocal + '-' + state.plenoVisitante;
-      lines.push('PRONÓSTICO;' + jornadaNum + ';' + signos + ';' + pleno15);
+    const cols = [];
+    for(let c=0; c<sys.cols; c++){
+      let s = '';
+      for(let r=0; r<14; r++){ s += signFor(r, c, orders).sign; }
+      cols.push(s);
     }
-    return lines;
+    return cols;
+  }
+
+  function fechaHoy(){
+    const meses = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+    const d = new Date();
+    return String(d.getDate()).padStart(2,'0') + meses[d.getMonth()] + String(d.getFullYear()).slice(-2);
+  }
+
+  function jornadaNumero(){
+    if(!state.jornadaKey) return '00';
+    const m = state.jornadaKey.match(/(\d+)/);
+    return m ? String(m[1]).padStart(2,'0') : '00';
+  }
+
+  // Un string por boleto (máximo 8 columnas cada uno)
+  function buildTicketStrings(){
+    const cols = buildColumnas();
+    const boletos = [];
+    for(let i=0; i<cols.length; i += COLS_POR_BOLETO){
+      boletos.push(cols.slice(i, i + COLS_POR_BOLETO));
+    }
+    const sCode = jornadaNumero() + '1' + fechaHoy() + ':1';
+    return boletos.map(function(grupo){
+      let body = '';
+      grupo.forEach(function(signos, idx){
+        body += '.' + (idx+1) + '=' + signos;
+        if(idx === 0){
+          body += ':' + state.plenoLocal + '-' + state.plenoVisitante;
+        }
+      });
+      return 'A=' + QR_A + ';P=' + QR_P + ';S=' + sCode + ';W=' + QR_W + ';' + body + ';T=' + QR_T + ';';
+    });
   }
 
   function buildPrintHTML(){
     const sys = currentSystem();
-    const lines = buildAdminLines();
-    const text = lines.join('\n');
+    const boletos = buildTicketStrings();
     const stamp = new Date().toLocaleDateString('es-ES');
-    let qrHtml = '';
-    try{
-      const qr = qrcode(0, 'M');
-      qr.addData(text);
-      qr.make();
-      const qrDataUrl = qr.createDataURL(6, 4);
-      qrHtml = '<img class="qr" src="' + qrDataUrl + '" alt="QR">';
-    }catch(e){ qrHtml = ''; }
-    let linesHtml = '';
-    lines.forEach(function(line, i){
-      linesHtml += '<div class="columna"><span class="numero">' + (i+1) + '</span> ' + line + '</div>';
+    let paginas = '';
+
+    boletos.forEach(function(texto, i){
+      let qrHtml = '';
+      try{
+        const qr = qrcode(0, 'M');
+        qr.addData(texto);
+        qr.make();
+        qrHtml = '<img class="qr" src="' + qr.createDataURL(6, 4) + '" alt="QR boleto ' + (i+1) + '">';
+      }catch(e){ qrHtml = '<div class="qr-error">No se pudo generar el QR</div>'; }
+
+      const cols = texto.match(/\.\d+=[1X2]{14}(:[0-9M]-[0-9M])?/g) || [];
+      let listaHtml = '';
+      cols.forEach(function(c){ listaHtml += '<div class="columna">' + c + '</div>'; });
+
+      paginas +=
+        '<div class="boleto">' +
+          '<h1>REDUCTOR Q</h1>' +
+          '<div class="meta">Boleto ' + (i+1) + ' de ' + boletos.length + ' · ' + sys.name + ' · ' + stamp + '</div>' +
+          '<div class="qr-wrap">' + qrHtml + '</div>' +
+          '<div class="cols">' + listaHtml + '</div>' +
+          '<div class="raw">' + texto + '</div>' +
+        '</div>';
     });
-    return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Reductor Q</title><style>body{font-family:Arial,sans-serif;padding:20px}.qr{width:160px;height:160px;float:right;margin:0 0 20px 20px}h1{font-size:18px;margin:0 0 10px}.meta{color:#555;font-size:12px;margin-bottom:15px}.columna{font-family:"Courier New",monospace;font-size:14px;padding:4px 0;border-bottom:1px solid #eee}.numero{font-weight:bold;color:#48e500;margin-right:10px}</style></head><body><h1>Reductor Q</h1><div class="meta">Generado: '+stamp+'</div>'+qrHtml+'<div style="clear:both"></div><h2>Columnas ('+lines.length+')</h2>'+linesHtml+'</body></html>';
+
+    return '<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><title>Reductor Q</title><style>' +
+      '*{box-sizing:border-box}' +
+      'body{font-family:Arial,Helvetica,sans-serif;margin:0;color:#111}' +
+      '.boleto{padding:24px;page-break-after:always;break-after:page}' +
+      '.boleto:last-child{page-break-after:auto;break-after:auto}' +
+      'h1{font-size:17px;margin:0 0 4px;letter-spacing:.05em}' +
+      '.meta{font-size:11px;color:#555;margin-bottom:16px}' +
+      '.qr-wrap{text-align:center;margin:0 0 18px}' +
+      '.qr{width:250px;height:250px;image-rendering:pixelated}' +
+      '.qr-error{color:#b00;font-size:12px}' +
+      '.cols{margin:0 0 14px}' +
+      '.columna{font-family:"Courier New",Courier,monospace;font-size:14px;letter-spacing:1px;padding:3px 0;border-bottom:1px solid #eee}' +
+      '.raw{font-family:"Courier New",Courier,monospace;font-size:9px;color:#888;word-break:break-all;border-top:1px solid #ddd;padding-top:8px}' +
+      '</style></head><body>' + paginas + '</body></html>';
   }
 
   const printBtn = document.getElementById('printBtn');
